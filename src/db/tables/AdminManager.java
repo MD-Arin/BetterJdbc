@@ -1,6 +1,7 @@
 package db.tables;
 
 import db.beans.Admin;
+import db.utils.ConnectionManager;
 import db.utils.DBType;
 import db.utils.DBUtil;
 import java.sql.Connection;
@@ -14,13 +15,14 @@ import java.util.logging.Logger;
 public class AdminManager {
 
     private static final Logger ADMINMANAGERLOG = Logger.getLogger(AdminManager.class.getName());
+    private static Connection conn = ConnectionManager.getInstance().getConnection();
 
 //    Display All Rows of data in Admin Table
     public static void displayAllRows() throws SQLException {
         String sql = "SELECT adminId, userName, password FROM admin";
 
         try (
-                Connection conn = DBUtil.getConnection(DBType.MYSQL);
+//                Connection conn = DBUtil.getConnection(DBType.MYSQL);
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(sql);) {
 
@@ -45,7 +47,7 @@ public class AdminManager {
         ResultSet rs = null;
 
         try (
-                Connection conn = DBUtil.getConnection(DBType.MYSQL);
+//                Connection conn = DBUtil.getConnection(DBType.MYSQL);
                 PreparedStatement stmt = conn.prepareStatement(sql);) {
 
             stmt.setInt(1, adminId);
@@ -79,7 +81,8 @@ public class AdminManager {
 
         ResultSet keys = null;
 
-        try (Connection conn = DBUtil.getConnection(DBType.MYSQL);
+        try (
+//                Connection conn = DBUtil.getConnection(DBType.MYSQL);
                 PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
             stmt.setString(1, admin.getUserName());
@@ -113,7 +116,7 @@ public class AdminManager {
     public static boolean update(Admin admin) throws SQLException {
         String sql = "UPDATE admin SET userName = ?, password = ? WHERE adminId = ?";
         try(
-                Connection conn = DBUtil.getConnection(DBType.MYSQL);
+//                Connection conn = DBUtil.getConnection(DBType.MYSQL);
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 ){
             
@@ -141,7 +144,7 @@ public class AdminManager {
         String sql = "DELETE FROM admin WHERE adminId = ?;";
         
         try(
-                Connection conn = DBUtil.getConnection(DBType.MYSQL);
+//                Connection conn = DBUtil.getConnection(DBType.MYSQL);
                 PreparedStatement stmt = conn.prepareStatement(sql);
                 ){
             

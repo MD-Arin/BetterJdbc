@@ -7,6 +7,8 @@ package betterjdbc;
 
 import db.beans.Admin;
 import db.tables.AdminManager;
+import db.utils.ConnectionManager;
+import db.utils.DBType;
 import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -20,6 +22,7 @@ public class BetterJdbc {
     public static void main(String[] args) throws SQLException{
         
 //      Display All Rows
+        ConnectionManager.getInstance().setDbType(DBType.MYSQL);
         AdminManager.displayAllRows();
 
 //      Get a row of data        
@@ -82,6 +85,8 @@ public class BetterJdbc {
         }else{
             MainLogger.log(Level.SEVERE, "Nothing to Delete!");
         }
+        
+        ConnectionManager.getInstance().close();
         
     }
     
